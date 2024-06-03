@@ -58,7 +58,7 @@ pipeline {
                     emailext(
                         subject: "Build Successful",
                         body: "The build and integration tests have passed. Artifacts are archived.",
-                        to: "your.email@example.com"
+                        to: "rsb132500000@gmail.com"
                     )
                 }
                 failure {
@@ -66,7 +66,7 @@ pipeline {
                     emailext(
                         subject: "Build Failed",
                         body: "The build or integration tests failed. Please check the Jenkins logs.",
-                        to: "your.email@example.com"
+                        to: "rsb132500000@gmail.com"
                     )
                 }
             }
