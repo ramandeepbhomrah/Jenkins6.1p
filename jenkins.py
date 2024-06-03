@@ -9,7 +9,6 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo "Cloning the repository from the path: ${env.REPO_PATH}"
-                // Assuming Git plugin is available
                 git url: 'https://github.com/your-repo.git', branch: 'main'
             }
         }
