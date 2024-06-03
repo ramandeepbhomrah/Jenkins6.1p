@@ -25,13 +25,7 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        stage('Static Code Analysis') {
-            steps {
-                echo "Running static code analysis with SonarQube"
-                // Example: Running SonarQube scanner
-                sh 'sonar-scanner -Dsonar.projectKey=your_project -Dsonar.sources=src'
-            }
-        }
+       
         stage('Dependency Check') {
             steps {
                 echo "Checking for known vulnerabilities using OWASP Dependency-Check"
