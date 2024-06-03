@@ -52,6 +52,7 @@ pipeline {
                         subject: "Build Successful",
                         body: "The build and integration tests have passed. Artifacts are archived.",
                         to: "rsb132500000@gmail.com"
+                        attachmentsPattern: 'build.log' // Attach the build log file to the email
                     )
                 }
                 failure {
