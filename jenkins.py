@@ -46,14 +46,18 @@ pipeline {
                
             }
             post {
-                success {
-                    echo 'Integration tests passed'
-                    emailext(
-                        subject: "Build Successful",
-                        body: "The build and integration tests have passed. Artifacts are archived.",
-                        to: "rsb132500000@gmail.com"
-                        attachmentsPattern: 'build.log' // Attach the build log file to the email
-                    )
+ success {
+ // Archive the build log file as an artifact
+ archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+ // Send notification email for successful pipeline
+ emailext (
+ subject: "Pipeline Status: SUCCESS",
+ body: "The Jenkins pipeline has completed successfully. Please find the build log
+attached.",
+ to: "rsb132500000@gmail.com",
+ attachmentsPattern: 'build.log' // Attach the build log file to the email
+ )
+
                 }
                 failure {
                     echo 'Integration tests failed'
