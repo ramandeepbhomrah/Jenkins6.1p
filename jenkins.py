@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REPO_PATH = "C:\Users\raman\Downloads"
+        REPO_PATH = "/path/user/raman"
         DEV_ENV = "development-env"
         PROD_ENV = "ramandeep"
     }
