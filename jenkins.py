@@ -57,8 +57,7 @@ attachmentsPattern: 'build.log'
  }
  stage('Deploy to Production') {
  steps {
- echo "Deploying the code:
-${env.PRODUCTION_ENVIRONMENT}"
+ echo "Deploying the code: ${env.PRODUCTION_ENVIRONMENT}"
  }
  }
  }
