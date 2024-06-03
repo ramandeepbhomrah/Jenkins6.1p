@@ -40,27 +40,27 @@ pipeline {
                
             }
         }
-stage('Integration Tests on Staging') {
- steps {
- script {
- echo "Running integration tests on the staging environment to ensure the application
-functions as expected in a production-like environment"
- // Create a custom message file
- writeFile file: 'build.log', text: 'Build log contents...'
- }
- }
- post {
- success {
- // Archive the build log file as an artifact
- archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
- // Send notification email for successful pipeline
- emailext (
- subject: "Pipeline Status: SUCCESS",
- body: "The Jenkins pipeline has completed successfully. Please find the build log
-attached.",
- to: "salonivinodmehta@gmail.com",
- attachmentsPattern: 'build.log' // Attach the build log file to the email
- )
+        stage('Integration Tests on Staging') {
+         steps {
+         script {
+         echo "Running integration tests on the staging environment to ensure the application functions as expected in a production-like environment"
+         // Create a custom message file
+         writeFile file: 'build.log', text: 'Build log contents...'
+         }
+         }
+         post {
+         success {
+         // Archive the build log file as an artifact
+         archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+         // Send notification email for successful pipeline
+         emailext (
+         subject: "Pipeline Status: SUCCESS",
+         body: "The Jenkins pipeline has completed successfully. Please find the build log
+        attached.",
+         to: "rsb132500000@gmail.com",
+         attachmentsPattern: 'build.log' // Attach the build log file to the email
+         )
+}
                      failure {
                     echo 'Integration tests failed'
                     emailext(
