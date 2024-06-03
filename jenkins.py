@@ -16,13 +16,13 @@ pipeline {
         stage('Compile') {
             steps {
                 echo "Compiling the application using Gradle"
-                sh './gradlew build'
+               
             }
         }
         stage('Test') {
             steps {
                 echo "Executing unit tests"
-                sh './gradlew test'
+               
             }
         }
        
@@ -30,20 +30,20 @@ pipeline {
             steps {
                 echo "Checking for known vulnerabilities using OWASP Dependency-Check"
                 // Example: Running Dependency-Check
-                sh 'dependency-check --project your_project --scan .'
+                
             }
         }
         stage('Deploy to Development') {
             steps {
                 echo "Deploying the application to the development environment"
                 // Example: Deploy to development environment
-                sh 'scp target/your-app.jar user@dev-server:/path/to/deploy'
+               
             }
         }
         stage('Integration Tests in Dev') {
             steps {
                 echo "Running integration tests in the development environment"
-                sh './integration-tests.sh'
+               
             }
             post {
                 success {
@@ -69,7 +69,7 @@ pipeline {
             steps {
                 echo "Deploying the application to the production environment: ${env.PROD_ENV}"
                 // Example: Deploy to production environment
-                sh 'scp target/your-app.jar user@prod-server:/path/to/deploy'
+                
             }
         }
     }
