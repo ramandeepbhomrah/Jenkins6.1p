@@ -4,7 +4,7 @@ pipeline {
         REPO_URL = "https://github.com/ramandeepbhomrah/Jenkins6.1p.git"
         REPO_PATH = "/path/user/raman"
         DEV_ENV = "development-env"
-        PROD_ENV = "production-env"
+        PROD_ENV = "Raman"
     }
     stages {
         stage('Clone Repository') {
@@ -15,48 +15,46 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                echo "Compiling the application using Gradle"
+                echo "Compiling the application"
                
             }
         }
         stage('Test') {
             steps {
-                echo "Executing unit tests"
+                echo "tests"
                
             }
         }
        
         stage('Dependency Check') {
             steps {
-                echo "Checking for known vulnerabilities using OWASP Dependency-Check"
-                // Example: Running Dependency-Check
-                
+                echo "Checking for vulnerabilities"
+              
             }
         }
         stage('Deploy to Development') {
             steps {
                 echo "Deploying the application to the development environment"
-                // Example: Deploy to development environment
-               
+                
             }
         }
         stage('Integration Tests on Staging') {
-         steps {
-         script {
-         echo "Running integration tests on the staging environment to ensure the application functions as expected in a production-like environment"
+            steps {
+                script {
+                echo "Running integration tests on the staging environment"
          // Create a custom message file
          writeFile file: 'build.log', text: 'Build log contents...'
-         }
-         }
+            }
+        }
          post {
-         success {
-         // Archive the build log file as an artifact
-         archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
+             success {
+         //Save the build log file to the artifacts folder.
+              archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
          // Send notification email for successful pipeline
          emailext (
-         subject: "Pipeline Status: SUCCESS",
-         body: "The Jenkins pipeline has completed successfully. Please find the build log attached.",
-         to: "rsb132500000@gmail.com",
+             subject: "Pipeline Status: SUCCESS",
+                             body: "The Jenkins pipeline has completed successfully. find the build log attached to this mail.",
+                             to: "rsb132500000@gmail.com",
          attachmentsPattern: 'build.log' // Attach the build log file to the email
          )
 }
@@ -73,8 +71,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo "Deploying the application to the production environment: ${env.PROD_ENV}"
-                // Example: Deploy to production environment
-                
+          
             }
         }
     }
