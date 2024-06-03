@@ -4,7 +4,7 @@ pipeline {
         REPO_URL = "https://github.com/ramandeepbhomrah/Jenkins6.1p.git"
         REPO_PATH = "/path/user/raman"
         DEV_ENV = "development-env"
-        PROD_ENV = "Ramansi"
+        PROD_ENV = "Ramansing"
     }
     stages {
         stage('Clone Repository') {
