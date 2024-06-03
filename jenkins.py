@@ -67,7 +67,6 @@ pipeline {
                         subject: "Build Failed",
                         body: "The build or integration tests failed. Please check the Jenkins logs.",
                         to: "rsb132500000@gmail.com"
-                        attachmentsPattern: 'build.log'
 
                     )
                 }
