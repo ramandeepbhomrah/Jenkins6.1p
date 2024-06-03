@@ -55,8 +55,7 @@ pipeline {
          // Send notification email for successful pipeline
          emailext (
          subject: "Pipeline Status: SUCCESS",
-         body: "The Jenkins pipeline has completed successfully. Please find the build log
-        attached.",
+         body: "The Jenkins pipeline has completed successfully. Please find the build log attached.",
          to: "rsb132500000@gmail.com",
          attachmentsPattern: 'build.log' // Attach the build log file to the email
          )
