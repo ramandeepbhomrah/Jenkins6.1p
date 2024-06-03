@@ -48,7 +48,6 @@ pipeline {
             post {
                 success {
                     echo 'Integration tests passed'
-                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: false
                     emailext(
                         subject: "Build Successful",
                         body: "The build and integration tests have passed. Artifacts are archived.",
