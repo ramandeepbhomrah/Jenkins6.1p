@@ -1,64 +1,84 @@
 pipeline {
- agent any
- environment {
- DIRECTORY_PATH = "/path/user/raman"
- TESTING_ENVIRONMENT = "test-env"
- PRODUCTION_ENVIRONMENT = "ramandeep"
- }
- stages {
- stage('Build') {
- steps {
- echo "Utilizing Maven, fetch the source code from the directory path ${env.DIRECTORY_PATH}"
- echo "Compiling the code with artifacts"
- }
- }
- stage('Unit and Integration Tests') {
- steps {
- echo "unit tests"
- sleep(time: 10, unit: 'SECONDS')
- echo "integration tests"
- }
- }
- stage('Code Analysis') {
- steps {
- echo "end of integration, go to the next step"
+    agent any
+    environment {
+        REPO_PATH = "/repository/path"
+        DEV_ENV = "development-env"
+        PROD_ENV = "ramandeep"
+    }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                echo "Cloning the repository from the path: ${env.REPO_PATH}"
+                // Assuming Git plugin is available
+                git url: 'https://github.com/your-repo.git', branch: 'main'
+            }
+        }
+        stage('Compile') {
+            steps {
+                echo "Compiling the application using Gradle"
+                sh './gradlew build'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Executing unit tests"
+                sh './gradlew test'
+            }
+        }
+        stage('Static Code Analysis') {
+            steps {
+                echo "Running static code analysis with SonarQube"
+                // Example: Running SonarQube scanner
+                sh 'sonar-scanner -Dsonar.projectKey=your_project -Dsonar.sources=src'
+            }
+        }
+        stage('Dependency Check') {
+            steps {
+                echo "Checking for known vulnerabilities using OWASP Dependency-Check"
+                // Example: Running Dependency-Check
+                sh 'dependency-check --project your_project --scan .'
+            }
+        }
+        stage('Deploy to Development') {
+            steps {
+                echo "Deploying the application to the development environment"
+                // Example: Deploy to development environment
+                sh 'scp target/your-app.jar user@dev-server:/path/to/deploy'
+            }
+        }
+        stage('Integration Tests in Dev') {
+            steps {
+                echo "Running integration tests in the development environment"
+                sh './integration-tests.sh'
+            }
+            post {
+                success {
+                    echo 'Integration tests passed'
+                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: false
+                    emailext(
+                        subject: "Build Successful",
+                        body: "The build and integration tests have passed. Artifacts are archived.",
+                        to: "your.email@example.com"
+                    )
+                }
+                failure {
+                    echo 'Integration tests failed'
+                    emailext(
+                        subject: "Build Failed",
+                        body: "The build or integration tests failed. Please check the Jenkins logs.",
+                        to: "rsb132500000@gmail.com"
+                        attachmentsPattern: 'build.log' // Attach the build log file to the email
 
- }
- }
- stage('Security Scan') {
- steps {
- echo "security scan l"
- }
- }
- stage('Deploy to Staging') {
- steps {
- echo "Installing the application on an AWS Elastic Beanstalk staging server"
- }
- }
- stage('Integration Tests on Staging') {
- steps {
- script {
- echo "Running integration tests on the staging environment"
- writeFile file: 'build.log', text: 'Build log contents...'
- }
- }
- post {
- success { 
- archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
- // Send notification email for successful pipeline
- emailext (
- subject: "Pipeline Status: SUCCESS",
- body: "The Jenkins pipeline has completed successfully.",
- to: "rsb132500000@gmail.com",
-attachmentsPattern: 'build.log' 
- )
- }
- }
- }
- stage('Deploy to Production') {
- steps {
- echo "Deploying the code: ${env.PRODUCTION_ENVIRONMENT}"
- }
- }
- }
+                    )
+                }
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo "Deploying the application to the production environment: ${env.PROD_ENV}"
+                // Example: Deploy to production environment
+                sh 'scp target/your-app.jar user@prod-server:/path/to/deploy'
+            }
+        }
+    }
 }
