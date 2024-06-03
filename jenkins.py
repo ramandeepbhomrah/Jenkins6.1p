@@ -43,6 +43,7 @@ pipeline {
         stage('Integration Tests in Dev') {
             steps {
                 echo "Running integration tests in the development environment"
+                writeFile file: 'build.log', text: 'Build log contents...'
                
             }
             post {
